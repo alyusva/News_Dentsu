@@ -1,21 +1,13 @@
-# Backend dependencies
+# Backend dependencies - Plataforma de Noticias IA y Marketing
 fastapi==0.104.1
-uvicorn==0.24.0
+uvicorn[standard]==0.24.0
 python-dotenv==1.0.0
 requests==2.31.0
-openai==1.3.7
-langgraph==0.0.62
-langchain==0.0.350
+pydantic>=2.8.0
+aiofiles==23.2.1
+
+# AI y LangGraph dependencies
+openai==1.3.0
 langchain-openai==0.0.2
-pydantic==2.5.0
-python-multipart==0.0.6
-aiofiles==0.23.0
-
-# For CORS
-fastapi-cors==0.0.6
-
-# For HuggingFace Spaces
-gradio==4.12.0
-
-# Additional dependencies
-pathlib2==2.3.7
+langgraph==0.0.25
+langchain-core==0.1.10

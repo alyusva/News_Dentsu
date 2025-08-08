@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# Archivos específicos del proyecto
+daily_requests.json
+test_*.py
+*_test.py
+
 # Distribution / packaging
 .Python
 build/

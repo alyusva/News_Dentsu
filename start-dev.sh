@@ -80,6 +80,10 @@ fi
 
 # Iniciar backend en background
 echo "🐍 Iniciando backend en puerto 8000..."
+# Activar entorno virtual si existe
+if [ -d "venv" ]; then
+    source venv/bin/activate
+fi
 cd backend
 python3 main.py &
 BACKEND_PID=$!

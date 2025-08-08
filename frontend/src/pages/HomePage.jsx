@@ -123,16 +123,6 @@ const HomePage = () => {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-t border-gray-200 dark:border-slate-700 mt-16">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-gray-600 dark:text-gray-400">
-            <p>© 2024 Plataforma de Noticias IA & Marketing - Prueba Técnica Dentsu</p>
-            <p className="text-sm mt-2">Desarrollado con React, FastAPI y tecnologías de IA</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
