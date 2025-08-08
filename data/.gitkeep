@@ -1,0 +1,6 @@
+# Logs y datos temporales
+*.log
+responses/
+
+# Ignorar datos sensibles
+api_responses.json
