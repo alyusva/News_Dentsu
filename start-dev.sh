@@ -1,53 +1,73 @@
 #!/bin/bash
 
-# Script de inicio para el desarrollo local
-# Plataforma de Noticias IA y Marketing - Dentsu
+# 🚀 Plataforma de Noticias IA y Marketing - Dentsu
+echo "🚀 Iniciando desarrollo local..."
 
-echo "🚀 Iniciando Plataforma de Noticias IA y Marketing"
-echo "=================================================="
-
-# Verificar si existe el archivo .env
+# Verificar .env
 if [ ! -f ".env" ]; then
-    echo "❌ Archivo .env no encontrado"
-    echo "📋 Copiando .env.example a .env..."
+    echo "❌ Archivo .env no encontrado. Copiando desde .env.example"
     cp .env.example .env
-    echo "⚠️  Por favor configura tus API keys en el archivo .env"
-    echo "   - OPENAI_API_KEY=tu_openai_api_key"
-    echo "   - NEWS_API_KEY=tu_news_api_key"
+    echo "⚠️  Configura tus API keys en .env antes de continuar"
     exit 1
 fi
 
-# Función para verificar si un puerto está ocupado
-check_port() {
-    lsof -ti:$1 > /dev/null
-    return $?
+# Instalar dependencias backend
+echo "📦 Instalando dependencias del backend..."
+pip3 install -r requirements.txt
+
+# Instalar dependencias frontend
+echo "📦 Instalando dependencias del frontend..."
+cd frontend && npm install && cd ..
+
+# Verificar puertos
+if lsof -ti:8000 > /dev/null; then
+    echo "⚠️  Puerto 8000 ocupado. Deteniendo proceso..."
+    kill $(lsof -ti:8000) 2>/dev/null || true
+fi
+
+if lsof -ti:3000 > /dev/null; then
+    echo "⚠️  Puerto 3000 ocupado. Deteniendo proceso..."
+    kill $(lsof -ti:3000) 2>/dev/null || true
+fi
+
+echo "🔥 Iniciando servicios..."
+
+# Iniciar backend
+echo "🐍 Iniciando backend en puerto 8000..."
+cd backend && python3 main_local.py &
+BACKEND_PID=$!
+cd ..
+
+# Esperar a que el backend inicie
+sleep 3
+
+# Iniciar frontend
+echo "⚡ Iniciando frontend en puerto 3000..."
+cd frontend && npm run dev &
+FRONTEND_PID=$!
+cd ..
+
+echo ""
+echo "✅ Servicios iniciados:"
+echo "   🔗 Backend:  http://localhost:8000"
+echo "   🔗 Frontend: http://localhost:3000"
+echo "   � API Docs: http://localhost:8000/docs"
+echo ""
+echo "🛑 Para detener: Ctrl+C"
+
+# Función para limpiar procesos al salir
+cleanup() {
+    echo ""
+    echo "🛑 Deteniendo servicios..."
+    kill $BACKEND_PID 2>/dev/null || true
+    kill $FRONTEND_PID 2>/dev/null || true
+    exit 0
 }
 
-# Verificar Python
-if ! command -v python3 &> /dev/null; then
-    echo "❌ Python 3 no está instalado"
-    exit 1
-fi
+trap cleanup SIGINT SIGTERM
 
-# Verificar Node.js
-if ! command -v node &> /dev/null; then
-    echo "❌ Node.js no está instalado"
-    exit 1
-fi
-
-echo "✅ Verificaciones pasadas"
-
-# Instalar dependencias del backend si no existen
-if [ ! -d "backend/__pycache__" ]; then
-    echo "📦 Instalando dependencias del backend..."
-    pip3 install -r requirements.txt
-fi
-
-# Instalar dependencias del frontend si no existen
-if [ ! -d "frontend/node_modules" ]; then
-    echo "📦 Instalando dependencias del frontend..."
-    cd frontend
-    npm install
+# Mantener el script corriendo
+wait
     cd ..
 fi
 
@@ -85,7 +105,7 @@ if [ -d "venv" ]; then
     source venv/bin/activate
 fi
 cd backend
-python3 main.py &
+python3 main_local.py &
 BACKEND_PID=$!
 cd ..
 
