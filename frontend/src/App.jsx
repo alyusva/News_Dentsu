@@ -9,13 +9,11 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-background text-foreground flex flex-col">
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/news" element={<NewsPage />} />
-            </Routes>
-          </main>
+        <div className="min-h-screen bg-background text-foreground">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/news" element={<NewsPage />} />
+          </Routes>
           <Footer />
         </div>
       </Router>

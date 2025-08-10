@@ -16,7 +16,7 @@ if __name__ == "__main__":
     print("📚 API Docs: http://localhost:8000/docs")
     
     uvicorn.run(
-        "app.main:app",
+        "main:app",  # Usar main.py en lugar de app.main
         host=os.getenv("HOST", "0.0.0.0"),
         port=int(os.getenv("PORT", 8000)),
         reload=True,  # Auto-reload en desarrollo

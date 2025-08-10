@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Importar el agente LangGraph
-from app.agent.langgraph_agent import NewsAgent
+from agent.langgraph_agent import NewsAgent
 logger.info("✅ Usando agente LangGraph")
 AGENT_TYPE = "langgraph"
 
